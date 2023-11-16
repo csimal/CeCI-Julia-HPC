@@ -197,10 +197,6 @@ using PProf
 #note[https://docs.julialang.org/en/v1.9/manual/profile/]
 ]
 
-#slide[
-== Code inspection tools
-
-]
 
 #focus-slide[
     = Performance Tips
