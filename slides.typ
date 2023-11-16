@@ -93,7 +93,7 @@ foo(x::AbstractFloat) = "Got a floating point number"
 ```jl
 bar(x,y) = ""
 bar(x::Real, y::Real) = "Two real numbers"
-bar(x::T, y::T) where {T<:Real} "Two real numbers of the same type"
+bar(x::T, y::T) where {T<:Real} = "Two real numbers of the same type"
 bar(x::Integer, x::Integer) = "Two integers"
 bar(x::Integer, y::AbstractFloat) = "An integer and a float"
 ```
@@ -294,7 +294,10 @@ Hint: Use the `@code_warntype` macro
 
 Note: Use with caution!
 
-#note[https://julialang.github.io/PackageCompiler.jl/dev/index.html]
+#note[
+https://juliaarrays.github.io/StaticArrays.jl/stable/
+
+https://julialang.github.io/PackageCompiler.jl/dev/index.html]
 ]
 
 #focus-slide[
@@ -343,7 +346,7 @@ https://juliainterop.github.io/RCall.jl/stable/gettingstarted/
 #side-by-side[
 Start Julia with multiple threads
 ```
-julia --threads 4
+julia --threads=4
 ```
 Checking number of threads/thread id
 ```jl
@@ -421,7 +424,7 @@ addprocs(4)
 Low level interface
 ```jl
 # call rand in processor 2 with argument (2,2)
-r = remotecall(rand, 2, (2, 2))
+r = remotecall(rand, 2, 2, 2)
 # evaluate `1 .+ fetch(r)` in processor 2
 s = @spawnat 2 1 .+ fetch(r)
 # get the value of s

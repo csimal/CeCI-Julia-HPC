@@ -36,6 +36,7 @@ Once the package is installed, you'll be able to select Julia as a kernel in Jup
 - Profiling https://docs.julialang.org/en/v1.9/manual/profile/
 - Performance Tips https://docs.julialang.org/en/v1.9/manual/performance-tips/
 - PackageCompiler.jl https://julialang.github.io/PackageCompiler.jl/dev/index.html
+- StaticArrays.jl https://juliaarrays.github.io/StaticArrays.jl/stable/
 - PythonCall.jl https://juliapy.github.io/PythonCall.jl/stable/
 - PyCall.jl https://github.com/JuliaPy/PyCall.jl
 - RCall.jl https://juliainterop.github.io/RCall.jl/stable/gettingstarted/
