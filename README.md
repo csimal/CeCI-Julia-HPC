@@ -1,4 +1,4 @@
-# CéCI Training Days: Introduction to Julia
+# CéCI Training Days: Julia for HPC
 
 Julia is a recent (2012) programming language created at the MIT with the aim to provide performance on par with the likes of C and Fortran, with the ease of use of languages like Python and Matlab. The goal of this advanced session is to go deeper into the various tools for High Performance Computing in Julia, from multi-threaded to distributed computing, as well as the necessary tools to work with them, such as benchmarking and profiling code.
 
