@@ -1,7 +1,7 @@
 #import "@preview/polylux:0.3.1": *
 #import themes.simple: *
 //#import "theme-unamur.typ": *
-
+#import "@preview/codetastic:0.2.2": qrcode
 //#show: unamur-theme.with()
 #show: simple-theme.with()
 
@@ -48,15 +48,23 @@ text(size: 0.7em, [image source: Wikipedia]))
 #slide[
 == Outline
 #set enum(start: 0)
-
+#side-by-side[
 + Recap on Multiple Dispatch
 + Benchmarking and Profiling Julia code
 + Performance Tips
-+ Parallelism in the Standard library
 + Interop with other languages
++ Parallelism in the Standard library
 + Packages for HPC
+][
+#set align(center)
+Follow along!
 
+#qrcode("https://github.com/csimal/CeCI-Julia-HPC")
+
+#text(size:0.8em)[https://github.com/csimal/CeCI-Julia-HPC]
 ]
+]
+
 
 #focus-slide[
 = Recap on Multiple Dispatch
@@ -208,7 +216,7 @@ using PProf
 
 - Put everything in functions
 - Pre-allocate arrays, use in-place functions
-- Global variables are evil. Use ```jl const```.
+- Global variables are evil. Use ```jl const```
 - Use multiple dispatch to break up functions
 - Access Arrays column by column
 - Abstract types at runtime are the devil
@@ -287,6 +295,42 @@ Hint: Use the `@code_warntype` macro
 Note: Use with caution!
 
 #note[https://julialang.github.io/PackageCompiler.jl/dev/index.html]
+]
+
+#focus-slide[
+    = Interop with other languages
+]
+
+#slide[
+== Calling Python/R
+#side-by-side[
+```jl
+using PythonCall
+
+re = pyimport("re")
+words = re.findall("[a-zA-Z]+", "PythonCall.jl is very useful!")
+sentence = Py(" ").join(words)
+pyconvert(String, sentence)
+```
+
+See also `PyCall.jl`
+][
+```jl
+using Rcall
+
+x = randn(10)
+R"t.test($x)"
+
+jmtcars = reval("mtcars");
+rcall(:dim, jmtcars)
+```
+
+]
+#note[
+https://juliapy.github.io/PythonCall.jl/stable/
+
+https://juliainterop.github.io/RCall.jl/stable/gettingstarted/
+]
 ]
 
 #focus-slide[
@@ -502,47 +546,7 @@ foo(n, ::FooDistributed) = foo_distributed(n)
 ]
 ]
 
-#focus-slide[
-    = Interop with other languages
-]
 
-#slide[
-== Calling C/Fortran
-
-#note[https://docs.julialang.org/en/v1.9/manual/calling-c-and-fortran-code/]
-]
-
-#slide[
-== Calling Python/R
-#side-by-side[
-```jl
-using PythonCall
-
-re = pyimport("re")
-words = re.findall("[a-zA-Z]+", "PythonCall.jl is very useful!")
-sentence = Py(" ").join(words)
-pyconvert(String, sentence)
-```
-
-See also `PyCall.jl`
-][
-```jl
-using Rcall
-
-x = randn(10)
-R"t.test($x)"
-
-jmtcars = reval("mtcars");
-rcall(:dim, jmtcars)
-```
-
-]
-#note[
-https://juliapy.github.io/PythonCall.jl/stable/
-
-https://juliainterop.github.io/RCall.jl/stable/gettingstarted/
-]
-]
 
 #focus-slide[
     = Packages for HPC
@@ -550,7 +554,26 @@ https://juliainterop.github.io/RCall.jl/stable/gettingstarted/
 
 #slide[
 == Dagger.jl
+#text(size: 0.8em)[
+```jl
+@everywhere begin
+    using Random
+    Random.seed!(0)
 
+    # Some "expensive" functions that complete at different speeds
+    const crn = abs.(randn(20, 7))
+    f(i) = sleep(crn[i, 7])
+    g(i, j, y) = sleep(crn[i, j])
+end
+function nested_dagger()
+    @sync for i in 1:20
+        y = Dagger.@spawn f(i)
+        for j in 1:6
+            z = Dagger.@spawn g(i, j, y)
+        end
+    end
+end
+```]
 #note[https://juliaparallel.org/Dagger.jl/dev/]
 ]
 
@@ -647,5 +670,6 @@ end
 - `MPI.jl`
 - `ClusterManagers.jl` Running slurm jobs directly from Julia
 - `DrWatson.jl` Setting up scientific projects
+- `libblastrampoline` Switch the BLAS/LAPACK backend dynamically at runtime
 
 ]
