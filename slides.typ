@@ -23,21 +23,21 @@
     == Cédric Simal
     #link("cedric.simal@unamur.be")
     == CéCI Training Sessions
-    16/11/2023
+    20/11/2023
 ]
 
 #centered-slide[
 == Science Anniversaries of today
 #side-by-side[
-    #image("images/venera.jpg", height: 70%)
-    #text(size: 0.7em, [Venera 3 Launch (1965)])
+    #image("images/Zarya.jpeg", height: 70%)
+    #text(size: 0.7em, [Zarya Launch (1998)])
 ][
-    #image("images/artemis.jpg", height: 70%)
-    #text(size: 0.7em, [Artemis 1 Launch (2022)])
+    #image("images/Hubble.jpeg", height: 70%)
+    #text(size: 0.7em, [Birth of Edwin Hubble (1889)])
     
 ][
-    #image("images/Amdahl.jpg", height: 70%)
-    #text([Birth of Gene Amdahl (1922)], size: 0.7em)
+    #image("images/Mandelbrot.jpeg", height: 70%)
+    #text([Birth of Benoit Mandelbrot (1924)], size: 0.7em)
 ]
 
 #place(bottom + left, 
@@ -202,13 +202,13 @@ using PProf
 ```
 ]
 
-#note[https://docs.julialang.org/en/v1.9/manual/profile/]
+#note[https://docs.julialang.org/en/v1/stdlib/Profile/]
 ]
 
 
 #focus-slide[
     = Performance Tips
-    #note("https://docs.julialang.org/en/v1.9/manual/performance-tips/")
+    #note("https://docs.julialang.org/en/v1/manual/performance-tips/")
 ]
 
 #slide[
@@ -285,7 +285,7 @@ Hint: Use the `@code_warntype` macro
 #slide[
 == Squeezing even more performance
 
-- `StaticArray` (small arrays allocated on the Stack)
+- `StaticArray` (statically sized arrays, allocated on the stack)
 - `@inline` hint that a function should be inlined
 - `@inbounds` disable bounds checking on array indexing
 - `@fastmath` (floating point optimizations)
@@ -365,7 +365,7 @@ end
 ```
 
 ]
-#note[https://docs.julialang.org/en/v1.9/manual/multi-threading/]
+#note[https://docs.julialang.org/en/v1/manual/multi-threading/]
 ]
 
 #slide[
@@ -411,7 +411,7 @@ end
 #slide[
 == Distributed Computing
 #side-by-side[
-Start Julia with multiple processors
+Start Julia with multiple processes
 ```
 julia -p 4
 ```
@@ -434,13 +434,13 @@ t = @spawnat :any fetch(s)^2
 ```
 ]
 
-#note[https://docs.julialang.org/en/v1.9/manual/distributed-computing/]
+#note[https://docs.julialang.org/en/v1/manual/distributed-computing/]
 ]
 
 #slide[
 == Loading dependencies accross processes
 ```jl
-# define function on every processor
+# define function on every process
 @everywhere function foo()
     ...
 end
@@ -509,6 +509,7 @@ end
 ```
 
 ]
+#note[https://docs.julialang.org/en/v1/manual/distributed-computing/#man-shared-arrays]
 ]
 
 #slide[
